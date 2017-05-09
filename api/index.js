@@ -10,31 +10,38 @@ const scrape_script = `
 window.courses = (_ => {
     courses = {};
 
-    courses["updated"] = document.querySelector("p > b").textContent.replace("  ", " ");
 
-	(Array.from(document.querySelectorAll("tr:not(.rowHighlight):not(.rowLowlight):not(.cufatrow)")).slice(2, this.length - 11)).forEach((val) => {
-		var classRow = val,
-			code = val.textContent.split("  \\n")[0],
-			name = val.textContent.split("  \\n")[1];
+    try {
+        courses["updated"] = document.querySelector("p > b").textContent.replace("  ", " ");
 
-		courses[code] = {};
+        (Array.from(document.querySelectorAll("tr:not(.rowHighlight):not(.rowLowlight):not(.cufatrow)")).slice(2, this.length - 11)).forEach((val) => {
+            var classRow = val,
+                code = val.textContent.split("  \\n")[0],
+                name = val.textContent.split("  \\n")[1];
 
-		while(classRow.nextElementSibling.className != "") {
-			var div = classRow.nextElementSibling.childNodes;
+            courses[code] = {};
 
-			courses[code][div[1].textContent] = courses[code][div[1].textContent] || [];
+            while(classRow.nextElementSibling.className != "") {
+                var div = classRow.nextElementSibling.childNodes;
 
-			courses[code][div[1].textContent].push({
-				code: div[2].textContent,
-				status: div[5].textContent,
-				enrolled: div[6].textContent,
-				percent: div[8].textContent.slice(0, -2),
-				location: div[10].textContent
-			});
+                courses[code][div[1].textContent] = courses[code][div[1].textContent] || [];
 
-			classRow = classRow.nextElementSibling;
-		}
-	});
+                courses[code][div[1].textContent].push({
+                    code: div[2].textContent,
+                    status: div[5].textContent,
+                    enrolled: div[6].textContent,
+                    percent: div[8].textContent.slice(0, -2),
+                    location: div[10].textContent
+                });
+
+                classRow = classRow.nextElementSibling;
+            }
+        });
+    } catch (e) {
+        return {
+            err: "No data found."
+        };
+    }
 
 	return courses;
 })();
