@@ -21,7 +21,8 @@ const server = http.createServer((req, res) => {
         if (typeof data.err !== "undefined") {
             res.writeHead(400, {"Content-type": "text/json; charset=utf-8"});
             res.write(JSON.stringify({
-                err: "Invalid faculty or session."
+                err: "Invalid faculty or session.",
+                msg: data.err
             }));
             res.end();
             return;
