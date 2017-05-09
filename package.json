@@ -5,7 +5,7 @@
   "main": "index.js",
   "dependencies": {
     "jsdom": "^10.1.0",
-    "request": "^0.1.7"
+    "request": "*"
   },
   "devDependencies": {},
   "scripts": {
