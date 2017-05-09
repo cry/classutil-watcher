@@ -12,7 +12,7 @@ window.courses = (_ => {
 
 
     try {
-        courses["updated"] = document.querySelector("p > b").textContent.replace("  ", " ");
+        courses["updated"] = (new Date(document.querySelector("p > b").textContent.replace("  ", " ").replace("AEST", "GMT+1000"))).getTime()/1000|0;
 
         (Array.from(document.querySelectorAll("tr:not(.rowHighlight):not(.rowLowlight):not(.cufatrow)")).slice(2, this.length - 11)).forEach((val) => {
             var classRow = val,
