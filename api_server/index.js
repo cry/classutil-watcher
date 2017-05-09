@@ -8,7 +8,7 @@ const server = http.createServer((req, res) => {
     // TODO: IMPLEMENT CACHING.
 
     if (Object.keys(params).length !== 2 || typeof params.s === "undefined" || typeof params.f === "undefined") {
-        res.writeHead(400, {"Content-type": "text/json; charset=utf-8"});
+        res.writeHead(400, {"Content-type": "text/json; charset=utf-8", "Access-Control-Allow-Origin": "*"});
         res.write(JSON.stringify({
             err: "Usage: /?f=<faculty>&s=<session>"
         }));
@@ -19,7 +19,7 @@ const server = http.createServer((req, res) => {
     api.get(params.f.toUpperCase(), params.s.toUpperCase(), (data) => {
 
         if (typeof data.err !== "undefined") {
-            res.writeHead(400, {"Content-type": "text/json; charset=utf-8"});
+            res.writeHead(400, {"Content-type": "text/json; charset=utf-8", "Access-Control-Allow-Origin": "*"});
             res.write(JSON.stringify({
                 err: "Invalid faculty or session.",
                 msg: data.err
@@ -28,7 +28,7 @@ const server = http.createServer((req, res) => {
             return;
         }
 
-        res.writeHead(200, {"Content-type": "text/json; charset=utf-8"});
+        res.writeHead(200, {"Content-type": "text/json; charset=utf-8", "Access-Control-Allow-Origin": "*"});
         res.write(JSON.stringify(data, null, '    '));
 
         res.end();
